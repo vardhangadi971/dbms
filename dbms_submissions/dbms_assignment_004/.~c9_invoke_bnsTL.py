@@ -1,0 +1,5 @@
+Q1="SELECT COUNT(*) FROM Movie WHERE year=2002 AND name LIKE 'Ha%' AND rank>2;"
+Q2="SELECT MAX(rank) FROM Movie WHERE name LIKE 'Autom%' AND (year=1983 OR year=1994);"
+Q3="SELECT COUNT() FROM Movie WHERE gender='M' AND (fname LIKE '%ei' OR lname LIKE 'ei%');"
+Q4="SELECT AVG(rank) as average_rank_of_movies FROM Movie WHERE year IN (1995,1993,2000) AND rank>=4.2;"
+Q5="SELECT SUM(rank) FROM Movie WHERE name LIKE '%Hary%' AND year BETWEEN 1981,1984 AND rank<9;"
