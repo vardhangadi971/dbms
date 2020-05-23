@@ -10,20 +10,21 @@ class InvalidField(Exception):
 def write_data(sql_query):
 	import sqlite3
 	connection = sqlite3.connect("students.sqlite3")
-	crsr = connection.cursor() 
-	crsr.execute("PRAGMA foreign_keys=on;") 
-	crsr.execute(sql_query) 
+	crsr = connection.cursor()
+	crsr.execute("PRAGMA foreign_keys=on;")
+	crsr.execute(sql_query)
 	connection.commit()
 	connection.close()
 
 def read_data(sql_query):
 	import sqlite3
 	connection = sqlite3.connect("students.sqlite3")
-	crsr = connection.cursor() 
-	crsr.execute(sql_query) 
-	ans= crsr.fetchall()  
-	connection.close() 
+	crsr = connection.cursor()
+	crsr.execute(sql_query)
+	ans= crsr.fetchall()
+	connection.close()
 	return ans
+	
  
 	
 
@@ -42,7 +43,7 @@ class Student:
 			a=read_data(q1)   
 			self.student_id=a[0][0]
 		else:
-			sql_query="update student set name='{}',age={},score={} where student_id={}".format(self.name,self.age,self.score,self.b)
+			sql_query="update student set student_id={},name='{}',age={},score={} where student_id={}".format(self.student_id,self.name,self.age,self.score,self.b)
 			write_data(sql_query) 
 	def delete(self):
 		sql_query='delete from student where student_id={}'.format(self.student_id)
@@ -55,7 +56,7 @@ class Student:
 			cls.a=x
 			cls.b=y
 			if str(x) not in ('name','age','score','student_id'):
-				raise InvalidField 
+				raise InvalidField
            
 			query="select * from student where {} = '{}'".format(cls.a,cls.b)
         
@@ -67,16 +68,12 @@ class Student:
 		elif len(obj)==1:
 			c=Student(obj[0][1],obj[0][2],obj[0][3])
 			c.student_id=obj[0][0]
-			return c	
-		
-			
-			
+			return c
 		
 
- 
- 
- 
- 
- 
- 
- 
+'''stu=Student(name="rajini",age=19,score=99)
+stu.save()
+stu.get(student_id=2)
+print(stu.name)'''
+
+
