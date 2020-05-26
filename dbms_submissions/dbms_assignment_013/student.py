@@ -15,6 +15,7 @@ def write_data(sql_query):
 	crsr.execute(sql_query)
 	connection.commit()
 	connection.close()
+	
 
 def read_data(sql_query):
 	import sqlite3
@@ -24,8 +25,10 @@ def read_data(sql_query):
 	ans= crsr.fetchall()
 	connection.close()
 	return ans
+	
 
 class Student:
+    
     def __init__(self, name, age, score):
         self.name = name
         self.student_id = None
@@ -58,18 +61,23 @@ class Student:
     @classmethod
     def get(cls,**kwarg):
         for x,y in kwarg.items():
+            
             cls.a=x
             cls.b=y
+            
             if str(x) not in ('name','age','score','student_id'):
                 raise InvalidField
            
         query="select * from student where {} = '{}'".format(cls.a,cls.b)
         
         obj=read_data(query)
+        
         if len(obj)>1:
             raise MultipleObjectsReturned
+            
         elif len(obj)==0:
             raise DoesNotExist
+            
         elif len(obj)==1:
             c=Student(obj[0][1],obj[0][2],obj[0][3])
             c.student_id=obj[0][0]
@@ -78,11 +86,14 @@ class Student:
     @classmethod
     def filter(cls,**kwar):
         li=[]
+        
         for key,value in kwar.items():
+            
             cls.x=key
             cls.y=value
             
             e=key.split('__')
+            
             if e[0] not in ('student_id','name','age','score'):
                 raise InvalidField
                 
@@ -118,9 +129,14 @@ class Student:
             elif e[1]=='contains':
                 sql_query="select * from student where {} like '%{}%'".format(e[0],cls.y)
                 r=read_data(sql_query)
+                
+            if len(r)==0:
+                return []
+            else:
+                out=[]
            
-            for i in r:
-                b=Student(i[1],i[2],i[3])
-                b.student_id=i[0]
-                li.append(b)
-        return li
+                for i in r:
+                    b=Student(i[1],i[2],i[3])
+                    b.student_id=i[0]
+                    out.append(b)
+        return out
