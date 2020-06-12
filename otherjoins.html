@@ -1,0 +1,122 @@
+iBHubs
+
+Home
+# Joins
+# Other types of Joins
+Natural Join
+Outer Join
+Left Outer Join
+Right Outer Join
+Full Outer Join
+Cross Join
+# Left Outer Join
+Left Outer Join
+
+A LEFT JOIN, also know as a LEFT OUTER JOIN returns all rows from the "left" table and matching rows from the "right" table. If there is no match for a row on the right table, null values are filled for the columns in the resulting imaginary table.
+
+# Syntax
+SELECT column1, column2, column3... FROM table1 LEFT JOIN table2 ON table1.column1 = table2.column2;
+# Example
+sqlite> SELECT * FROM Owner LEFT JOIN Car on Owner.owner_id==Car.owner_id;
+# Result
+owner_id	name	id	model_no	owner_id
+1	RAM	1	Benz C Class	1
+2	John	2	Benz D Class	2
+3	Robert	3	Benz E Class	3
+3	Robert	4	Benz F Class	3
+3	Robert	5	Benz G Class	3
+4	Mike	null	null	null
+5	Jessie	null	null	null
+As Mike and Jessie are not the owner of any car, we got null for right table attributes(i.e., Car in this example).
+
+# Right Outer Join
+Right Outer Join
+
+A RIGHT OUTER JOIN returns all rows from the "right" table and matching rows from the "left" table. If there is no match for a row on the left table, null values are filled for the columns in the resulting imaginary table.
+
+# Syntax
+SELECT column1, column2, column3... FROM table1 RIGHT JOIN table2 ON table1.column1 = table2.column2;
+Note
+Sqlite3 doesn't support Right Outer Join
+
+# Full Outer Join
+Full Outer Join
+
+A FULL OUTER JOIN returns
+
+all rows that match the condition &
+rows of first table which don't have any corresponding entries in the second table &
+rows of second table which don't have any corresponding entries in the first table.
+# Syntax
+SELECT column1, column2, column3... FROM table1 FULL OUTER JOIN table2 ON table1.column1 = table2.column2;
+Note
+Sqlite3 doesn't support FULL OUTER JOIN
+
+# Natural Join
+A natural join is a type of join that combines tables based on columns with the same name and type.
+
+# Syntax
+SELECT * FROM Table1 NATURAL JOIN Table2;
+# Example
+sqlite> SELECT * FROM Owner NATURAL JOIN Car;
+# Result
+owner_id	name	car_id	model_no
+1	RAM	1	Benz C Class
+2	John	2	Benz D Class
+3	Robert	3	Benz E Class
+3	Robert	4	Benz F Class
+3	Robert	5	Benz G Class
+The common field in our case is owner_id so SQL has stitched the entries in Owner and Car which have same value for owner_id attribute.
+
+# Cross Join
+InnerJoin
+A CROSS JOIN, also know as a CARTESIAN JOIN returns all the records formed by stitching every record in the first table with every record in the second table.
+
+# Syntax
+SELECT * FROM table1 CROSS JOIN table2;
+# Example
+sqlite> SELECT * FROM Owner CROSS JOIN Car;
+# Result
+owner_id	name	id	model_no	owner_id
+1	RAM	1	Benz C Class	1
+1	RAM	2	Benz D Class	2
+1	RAM	3	Benz E Class	3
+1	RAM	4	Benz F Class	3
+1	RAM	5	Benz G Class	3
+1	RAM	6	BMW	
+1	RAM	7	Ford	
+2	John	1	Benz C Class	1
+2	John	2	Benz D Class	2
+2	John	3	Benz E Class	3
+2	John	4	Benz F Class	3
+2	John	5	Benz G Class	3
+2	John	6	BMW	
+2	John	7	Ford	
+....
+
+....
+
+....
+
+You might have noticed that owner_id is repeated in the result as the two tables have owner_id column, the result has two owner_id columns one from each table.
+
+# Try it yourself
+Make use of the imdb database given to you and apply the above concepts to solve the below problems
+
+# Task 1
+Perform natural join between Movie and Cast
+
+# Task 2
+Perform a left outer join between Director and MovieDirectors.
+
+# Task 3
+Find the number of movies each actor has casted in
+
+# Output Format:
+names	movies_count
+Antonio	3
+...
+
+# Task 4
+Perform a left outer join between Actor and Cast and fine the actors haven't casted in any movie.
+
